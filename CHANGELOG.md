@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `ak auth login --oidc-device` (`--device` alias) signs in with Artifact Keeper's RFC 8628 device authorization grant, for headless hosts and SSO-backed instances. The CLI prints the verification URL and user code, polls at the server's interval, honours `authorization_pending` and `slow_down`, reports `expired_token`, `access_denied` and `invalid_grant` clearly, and stores the returned access and refresh tokens through the existing credential store. `--scope` selects AK scopes (default `read:artifacts`); `--no-input` keeps the flow non-interactive and never opens a browser. Tokens are never printed (artifact-keeper#3462)
+
 ### Fixed
 
 - `ak admin storage-gc run` now always sends `dry_run` explicitly, so a live run posts `{"dry_run": false}` instead of an empty body. Companion to artifact-keeper#3619, which makes `dry_run` required on the storage-GC endpoint and rejects unknown fields (422)
